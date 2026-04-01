@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketBull — Design Brain</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#06060b;--surface:#0e0e16;--surface2:#16161f;--surface3:#1e1e2a;
+  --border:#252535;--text:#eaeaf2;--text2:#9898b0;--text3:#5c5c78;
+  --accent:#4f8cff;--accent2:#3670d8;--green:#22c55e;--red:#ef4444;
+  --purple:#a855f7;--orange:#f59e0b;--cyan:#06b6d4;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+.grain{position:fixed;inset:0;pointer-events:none;opacity:.03;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:9999}
+
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+
+header{padding:20px 0;border-bottom:1px solid var(--border)}
+header .inner{display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.logo span{color:var(--accent)}
+header nav{display:flex;gap:24px}
+header nav a{color:var(--text2);text-decoration:none;font-size:13px;font-weight:500;transition:color .2s}
+header nav a:hover{color:var(--text)}
+
+.hero{padding:80px 0 60px;text-align:center}
+.hero .badge{display:inline-block;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;color:var(--accent);background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.15);margin-bottom:24px}
+.hero h1{font-size:52px;font-weight:800;line-height:1.15;letter-spacing:-1.5px;margin-bottom:20px}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:17px;color:var(--text2);max-width:580px;margin:0 auto 36px;line-height:1.6}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hero-actions a{padding:14px 28px;border-radius:10px;font-size:14px;font-weight:600;text-decoration:none;transition:all .25s}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px);box-shadow:0 8px 24px rgba(79,140,255,.25)}
+.btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;padding:0 0 60px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;transition:all .3s;text-decoration:none;color:inherit;display:block}
+.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 12px 32px rgba(0,0,0,.3)}
+.card .icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.card h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.card p{font-size:13px;color:var(--text2);line-height:1.5}
+.card .tag{display:inline-block;margin-top:12px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:6px}
+
+.section-title{font-size:14px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:24px;padding-top:40px}
+
+.stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;padding-bottom:60px}
+.stack-item{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;font-size:13px;font-weight:600;transition:border-color .2s}
+.stack-item:hover{border-color:var(--accent)}
+.stack-item .sub{font-size:11px;color:var(--text3);font-weight:400;margin-top:4px}
+
+.phases{display:grid;gap:12px;padding-bottom:60px}
+.phase{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.phase-num{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;font-family:'JetBrains Mono',monospace;flex-shrink:0}
+.phase h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.phase p{font-size:13px;color:var(--text2);line-height:1.5}
+
+footer{border-top:1px solid var(--border);padding:32px 0;text-align:center;color:var(--text3);font-size:12px}
+
+@media(max-width:700px){
+  .hero h1{font-size:32px}
+  .cards{grid-template-columns:1fr}
+  header nav{display:none}
+}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<header>
+  <div class="container inner">
+    <div class="logo">Market<span>Bull</span></div>
+    <nav>
+      <a href="wireframes/">Wireframes</a>
+      <a href="https://github.com/punit5658/marketbull" target="_blank">Source Code</a>
+      <a href="https://github.com/punit5658/marketbull-brain" target="_blank">Brain Repo</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="hero">
+    <div class="badge">Design Brain &mdash; Phase 0</div>
+    <h1>Options analytics<br>with <em>striking visuals</em></h1>
+    <p>MarketBull is a SaaS platform for options traders. 20+ interactive charts, real-time OPRA streaming, historical analytics, and market-wide trend discovery.</p>
+    <div class="hero-actions">
+      <a href="wireframes/" class="btn-primary">View Wireframes &rarr;</a>
+      <a href="https://github.com/punit5658/marketbull" target="_blank" class="btn-secondary">Source on GitHub</a>
+    </div>
+  </div>
+
+  <div class="section-title">Design Artifacts</div>
+  <div class="cards">
+    <a href="wireframes/" class="card">
+      <div class="icon" style="background:rgba(79,140,255,.1);color:var(--accent)">&#9634;</div>
+      <h3>Interactive Wireframes</h3>
+      <p>12 navigable screens — homepage, ticker overview, GEX overlay with strike levels, OI chart, option chain, pricing, blog, docs, auth, and dashboard.</p>
+      <span class="tag" style="background:rgba(79,140,255,.1);color:var(--accent)">12 Screens</span>
+    </a>
+    <a href="wireframes/#gex-overlay" class="card" onclick="localStorage.setItem('mb-page','gex-overlay')">
+      <div class="icon" style="background:rgba(34,197,94,.1);color:var(--green)">&#9889;</div>
+      <h3>GEX Strike Overlay</h3>
+      <p>TradingView Lightweight Chart with Call Walls, Put Walls, HVL, NETGEX levels, IV curve, and IVx tooltip — matching the live trading view.</p>
+      <span class="tag" style="background:rgba(34,197,94,.1);color:var(--green)">Live Chart</span>
+    </a>
+    <a href="https://github.com/punit5658/marketbull/blob/main/AGENTS.md" target="_blank" class="card">
+      <div class="icon" style="background:rgba(168,85,247,.1);color:var(--purple)">&#128302;</div>
+      <h3>Agent System</h3>
+      <p>13 specialized AI agents orchestrated by a Project Manager. Each feature gets its own context window for focused, high-quality development.</p>
+      <span class="tag" style="background:rgba(168,85,247,.1);color:var(--purple)">13 Agents</span>
+    </a>
+  </div>
+
+  <div class="section-title">Tech Stack</div>
+  <div class="stack-grid">
+    <div class="stack-item">Next.js 15<div class="sub">App Router, SSR/SSG</div></div>
+    <div class="stack-item">NestJS<div class="sub">Modular Monolith</div></div>
+    <div class="stack-item">TypeScript<div class="sub">Strict Mode</div></div>
+    <div class="stack-item">PostgreSQL 16<div class="sub">Prisma ORM</div></div>
+    <div class="stack-item">ClickHouse<div class="sub">Time-Series</div></div>
+    <div class="stack-item">Redis 7<div class="sub">Cache + BullMQ</div></div>
+    <div class="stack-item">TradingView<div class="sub">Lightweight Charts</div></div>
+    <div class="stack-item">Apache ECharts<div class="sub">Options Analytics</div></div>
+    <div class="stack-item">Socket.IO<div class="sub">WebSocket Gateway</div></div>
+    <div class="stack-item">Intrinio OPRA<div class="sub">Market Data</div></div>
+    <div class="stack-item">Stripe<div class="sub">Subscriptions</div></div>
+    <div class="stack-item">Docker + Traefik<div class="sub">Local Dev</div></div>
+    <div class="stack-item">AWS ECS Fargate<div class="sub">Production</div></div>
+    <div class="stack-item">shadcn/ui<div class="sub">Tailwind CSS</div></div>
+    <div class="stack-item">Zustand<div class="sub">State Mgmt</div></div>
+    <div class="stack-item">TanStack Query<div class="sub">Server State</div></div>
+  </div>
+
+  <div class="section-title">Development Phases</div>
+  <div class="phases">
+    <div class="phase">
+      <div class="phase-num" style="background:rgba(34,197,94,.1);color:var(--green)">0A</div>
+      <div><h4>Agent Infrastructure</h4><p>Git repo, AGENTS.md, 13 agent definitions, 10 skills, 9 rules, hooks, commands, .env template. <strong style="color:var(--green)">Complete</strong></p></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num" style="background:rgba(79,140,255,.1);color:var(--accent)">0B</div>
+      <div><h4>Project Scaffolding</h4><p>Monorepo structure, Docker Compose + Traefik, database schemas, shared types package, CI pipeline.</p></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num" style="background:rgba(245,158,11,.1);color:var(--orange)">1</div>
+      <div><h4>MVP Core</h4><p>Auth, basic ticker pages, 5 chart types (OI, Volume, Max Pain, IV Skew, Greeks), market trends, Free tier.</p></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num" style="background:rgba(168,85,247,.1);color:var(--purple)">2</div>
+      <div><h4>Advanced Charts + Billing</h4><p>GEX/DEX, P&L, Probability, Expected Move, Historical builder, Stripe subscriptions, Premium/Ultimate tiers.</p></div>
+    </div>
+    <div class="phase">
+      <div class="phase-num" style="background:rgba(239,68,68,.1);color:var(--red)">3</div>
+      <div><h4>Real-time + Polish</h4><p>WebSocket streaming, Intrinio OPRA integration, watchlists, saved trades, blog CMS, full SaaS launch.</p></div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    MarketBull &mdash; Options Analytics SaaS &mdash; Design Brain<br>
+    <a href="https://github.com/punit5658/marketbull" target="_blank" style="color:var(--accent);text-decoration:none">github.com/punit5658/marketbull</a>
+  </div>
+</footer>
+</body>
+</html>

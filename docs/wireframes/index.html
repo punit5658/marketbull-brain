@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MarketBull — Wireframes</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--surface:#12121a;--surface2:#1a1a26;--surface3:#22222e;
+  --border:#2a2a3a;--border2:#3a3a4e;
+  --text:#e8e8f0;--text2:#a0a0b8;--text3:#6a6a82;
+  --accent:#4f8cff;--accent2:#3b6fd6;--green:#22c55e;--red:#ef4444;
+  --orange:#f59e0b;--purple:#a855f7;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+.screen-nav{display:flex;gap:4px;padding:12px 20px;background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;flex-wrap:wrap;align-items:center}
+.screen-nav .brand{font-weight:700;font-size:15px;color:var(--accent);margin-right:16px;letter-spacing:-.3px}
+.screen-tab{padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text2);transition:all .2s;border:1px solid transparent;user-select:none}
+.screen-tab:hover{background:var(--surface2);color:var(--text)}
+.screen-tab.active{background:var(--accent);color:#fff;border-color:var(--accent2)}
+.screen-tab .badge{font-size:10px;background:rgba(255,255,255,.2);padding:2px 6px;border-radius:10px;margin-left:4px}
+
+.page{display:none;padding:24px;max-width:1400px;margin:0 auto}
+.page.active{display:block}
+
+/* Shared wireframe primitives */
+.wire-solid{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px}
+.wire-box{border:1.5px dashed var(--border2);border-radius:10px;padding:16px;margin-bottom:16px;position:relative}
+.wire-box .label{position:absolute;top:-10px;left:12px;background:var(--bg);padding:0 8px;font-size:11px;color:var(--accent);font-weight:600;letter-spacing:.5px;text-transform:uppercase}
+.wire-header{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.wire-placeholder{background:var(--surface2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;font-weight:500;min-height:60px}
+.wire-chart{background:linear-gradient(180deg,var(--surface2) 0%,var(--surface) 100%);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:13px;position:relative;overflow:hidden;min-height:300px}
+.wire-chart::before{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(180deg,transparent,rgba(79,140,255,.06));pointer-events:none}
+.wire-btn{padding:8px 18px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .2s}
+.wire-btn-primary{background:var(--accent);color:#fff}
+.wire-btn-primary:hover{background:var(--accent2)}
+.wire-btn-secondary{background:var(--surface2);color:var(--text);border:1px solid var(--border)}
+.wire-input{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px;color:var(--text);font-size:13px;width:100%;font-family:'DM Sans',sans-serif}
+.wire-tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600}
+.wire-green{background:rgba(34,197,94,.12);color:var(--green)}
+.wire-red{background:rgba(239,68,68,.12);color:var(--red)}
+.wire-blue{background:rgba(79,140,255,.12);color:var(--accent)}
+.wire-orange{background:rgba(245,158,11,.12);color:var(--orange)}
+.wire-purple{background:rgba(168,85,247,.12);color:var(--purple)}
+
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:1fr 1fr}
+.grid-3{grid-template-columns:1fr 1fr 1fr}
+.grid-4{grid-template-columns:1fr 1fr 1fr 1fr}
+.grid-sidebar{grid-template-columns:260px 1fr}
+.grid-main{grid-template-columns:1fr 340px}
+
+.wire-table{width:100%;border-collapse:collapse}
+.wire-table th{text-align:left;padding:10px 12px;font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);font-weight:600}
+.wire-table td{padding:10px 12px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text2)}
+.wire-table tr:hover td{background:var(--surface2)}
+.wire-table .ticker{color:var(--accent);font-weight:600;cursor:pointer}
+
+.chart-tabs{display:flex;gap:2px;padding:4px;background:var(--surface);border-radius:10px;margin-bottom:16px;flex-wrap:wrap}
+.chart-tab{padding:8px 14px;border-radius:8px;font-size:12px;color:var(--text3);cursor:pointer;transition:all .2s;font-weight:500}
+.chart-tab:hover{color:var(--text2);background:var(--surface2)}
+.chart-tab.active{background:var(--surface3);color:var(--text)}
+
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px}
+.stat-card .stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.stat-card .stat-value{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace}
+.stat-card .stat-change{font-size:12px;margin-top:4px;font-weight:600}
+
+.pricing-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;transition:all .3s}
+.pricing-card.featured{border-color:var(--accent);box-shadow:0 0 30px rgba(79,140,255,.1)}
+.pricing-card h3{font-size:20px;margin-bottom:8px}
+.pricing-card .price{font-size:36px;font-weight:700;font-family:'JetBrains Mono',monospace;margin:16px 0}
+.pricing-card .price span{font-size:14px;color:var(--text3);font-weight:400}
+.pricing-card ul{list-style:none;text-align:left;margin:20px 0}
+.pricing-card li{padding:8px 0;font-size:13px;color:var(--text2);border-bottom:1px solid var(--border)}
+.pricing-card li::before{content:'\2713';color:var(--green);margin-right:8px;font-weight:700}
+.pricing-card li.disabled{color:var(--text3)}
+.pricing-card li.disabled::before{content:'\2717';color:var(--text3)}
+
+.page-title{font-size:28px;font-weight:700;margin-bottom:6px}
+.page-subtitle{font-size:14px;color:var(--text3);margin-bottom:24px}
+
+.hero{text-align:center;padding:60px 20px 40px}
+.hero h1{font-size:42px;font-weight:700;line-height:1.2;margin-bottom:16px}
+.hero h1 em{color:var(--accent);font-style:normal}
+.hero p{font-size:16px;color:var(--text2);max-width:600px;margin:0 auto 24px}
+.hero-search{max-width:480px;margin:0 auto;position:relative}
+.hero-search input{width:100%;padding:14px 20px 14px 44px;background:var(--surface);border:1px solid var(--border);border-radius:12px;color:var(--text);font-size:15px;font-family:'DM Sans',sans-serif}
+.hero-search .search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:16px}
+.hero-search .kbd{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:var(--surface2);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text3);font-family:'JetBrains Mono',monospace}
+.hero-tickers{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.hero-tickers a{color:var(--accent);font-size:13px;font-weight:600;text-decoration:none;padding:4px 12px;background:rgba(79,140,255,.08);border-radius:6px;cursor:pointer}
+
+.section{margin-bottom:32px}
+.section-title{font-size:18px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+.trending-tabs{display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px}
+.trending-tab{white-space:nowrap;padding:8px 16px;border-radius:8px;font-size:12px;background:var(--surface);border:1px solid var(--border);color:var(--text2);cursor:pointer;font-weight:500;transition:all .2s}
+.trending-tab:hover{border-color:var(--accent);color:var(--text)}
+.trending-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+.sidebar-nav{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px}
+.sidebar-item{padding:10px 14px;border-radius:8px;font-size:13px;color:var(--text2);cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .15s}
+.sidebar-item:hover{background:var(--surface2);color:var(--text)}
+.sidebar-item.active{background:var(--accent);color:#fff}
+.sidebar-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding:8px 14px;font-weight:600}
+.sidebar-label+.sidebar-label{padding-top:16px}
+
+.footer-note{text-align:center;padding:40px 20px;color:var(--text3);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+
+.sparkline{width:80px;height:28px;display:flex;align-items:flex-end;gap:1px}
+.sparkline .bar{flex:1;background:var(--accent);border-radius:1px 1px 0 0;opacity:.6}
+
+.tv-range{font-size:12px;color:var(--text3);cursor:pointer;padding:4px 10px;border-radius:6px;font-weight:500;font-family:'JetBrains Mono',monospace;transition:all .15s}
+.tv-range:hover{color:var(--text);background:var(--surface2)}
+.tv-range.active{color:var(--accent);font-weight:700;border-bottom:2px solid var(--accent)}
+
+@media(max-width:900px){
+  .grid-2,.grid-3,.grid-4,.grid-sidebar,.grid-main{grid-template-columns:1fr}
+  .hero h1{font-size:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<nav class="screen-nav">
+  <span class="brand">MarketBull Wireframes</span>
+  <div class="screen-tab active" data-page="home">Homepage</div>
+  <div class="screen-tab" data-page="ticker">Ticker Overview</div>
+  <div class="screen-tab" data-page="gex-overlay">GEX Overlay</div>
+  <div class="screen-tab" data-page="chart-oi">OI Chart</div>
+  <div class="screen-tab" data-page="chart-greeks">Greeks Chart</div>
+  <div class="screen-tab" data-page="chain">Option Chain</div>
+  <div class="screen-tab" data-page="history">History Builder</div>
+  <div class="screen-tab" data-page="trending">Trending</div>
+  <div class="screen-tab" data-page="pricing">Pricing</div>
+  <div class="screen-tab" data-page="blog">Blog</div>
+  <div class="screen-tab" data-page="docs">Docs / FAQ</div>
+  <div class="screen-tab" data-page="auth">Auth</div>
+  <div class="screen-tab" data-page="dashboard">User Dashboard</div>
+</nav>
+
+<!-- ===================== 1. HOMEPAGE ===================== -->
+<div id="page-home" class="page active">
+
+  <!-- App Header mockup -->
+  <div class="wire-header" style="margin-bottom:24px">
+    <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap">
+      <span style="font-weight:700;font-size:18px;color:var(--accent)">MarketBull</span>
+      <span style="font-size:13px;color:var(--text2);cursor:pointer">Market Trends</span>
+      <span style="font-size:13px;color:var(--text2);cursor:pointer">Pricing</span>
+      <span style="font-size:13px;color:var(--text2);cursor:pointer">Blog</span>
+      <span style="font-size:13px;color:var(--text2);cursor:pointer">Docs</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <input class="wire-input" style="width:220px;padding:8px 12px" placeholder="&#128269; Search ticker... Cmd+K">
+      <button class="wire-btn wire-btn-secondary">Log In</button>
+      <button class="wire-btn wire-btn-primary">Sign Up</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <h1>Options analytics with<br><em>striking charts and visuals</em></h1>
+    <p>20+ interactive charts, real-time OPRA streaming, historical data, and market-wide trend discovery — all on one platform.</p>
+    <div class="hero-search">
+      <span class="search-icon">&#128269;</span>
+      <input type="text" placeholder="Search ticker or company name...">
+      <span class="kbd">&#8984;K</span>
+    </div>
+    <div class="hero-tickers">
+      <a>SPY</a><a>SPX</a><a>TSLA</a><a>NVDA</a><a>AAPL</a><a>GOOG</a><a>MSFT</a><a>AMD</a>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span> Option Market Trends</div>
+    <div class="trending-tabs">
+      <div class="trending-tab active">Most Active (Ticker)</div>
+      <div class="trending-tab">Most Active (Contract)</div>
+      <div class="trending-tab">Highest OI (Ticker)</div>
+      <div class="trending-tab">Highest OI (Contract)</div>
+      <div class="trending-tab">Highest IV (Ticker)</div>
+      <div class="trending-tab">High IV Rank</div>
+      <div class="trending-tab">Low IV Rank</div>
+      <div class="trending-tab">Unusual Activity</div>
+      <div class="trending-tab">Options Flow</div>
+    </div>
+    <div class="wire-solid">
+      <table class="wire-table">
+        <thead><tr><th>Ticker</th><th>Price</th><th>Change</th><th>Opt Volume</th><th>IV Rank</th><th>OI</th><th>Trend</th></tr></thead>
+        <tbody>
+          <tr><td class="ticker">TSLA</td><td style="font-family:'JetBrains Mono',monospace">$278.42</td><td><span class="wire-tag wire-green">+3.21%</span></td><td>1.2M</td><td>72</td><td>8.4M</td><td><div class="sparkline"><div class="bar" style="height:40%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:60%"></div><div class="bar" style="height:80%"></div><div class="bar" style="height:90%"></div></div></td></tr>
+          <tr><td class="ticker">NVDA</td><td style="font-family:'JetBrains Mono',monospace">$142.18</td><td><span class="wire-tag wire-red">-1.45%</span></td><td>2.8M</td><td>85</td><td>12.1M</td><td><div class="sparkline"><div class="bar" style="height:90%"></div><div class="bar" style="height:85%"></div><div class="bar" style="height:70%"></div><div class="bar" style="height:60%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:40%"></div></div></td></tr>
+          <tr><td class="ticker">SPY</td><td style="font-family:'JetBrains Mono',monospace">$584.90</td><td><span class="wire-tag wire-green">+0.82%</span></td><td>5.1M</td><td>34</td><td>45.2M</td><td><div class="sparkline"><div class="bar" style="height:50%"></div><div class="bar" style="height:52%"></div><div class="bar" style="height:55%"></div><div class="bar" style="height:53%"></div><div class="bar" style="height:58%"></div><div class="bar" style="height:56%"></div><div class="bar" style="height:60%"></div></div></td></tr>
+          <tr><td class="ticker">AAPL</td><td style="font-family:'JetBrains Mono',monospace">$198.55</td><td><span class="wire-tag wire-green">+0.31%</span></td><td>890K</td><td>28</td><td>6.8M</td><td><div class="sparkline"><div class="bar" style="height:45%"></div><div class="bar" style="height:48%"></div><div class="bar" style="height:46%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:47%"></div><div class="bar" style="height:52%"></div><div class="bar" style="height:50%"></div></div></td></tr>
+          <tr><td class="ticker">AMZN</td><td style="font-family:'JetBrains Mono',monospace">$205.12</td><td><span class="wire-tag wire-red">-0.67%</span></td><td>620K</td><td>41</td><td>4.2M</td><td><div class="sparkline"><div class="bar" style="height:60%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:58%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:48%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:42%"></div></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title"><span class="dot"></span> Platform Features</div>
+    <div class="grid grid-4">
+      <div class="wire-solid" style="text-align:center;padding:24px 16px">
+        <div style="font-size:28px;margin-bottom:8px">&#128200;</div>
+        <div style="font-weight:600;margin-bottom:4px">20+ Charts</div>
+        <div style="font-size:12px;color:var(--text3)">OI, Volume, Greeks, GEX, IV Skew, P&L, and more</div>
+      </div>
+      <div class="wire-solid" style="text-align:center;padding:24px 16px">
+        <div style="font-size:28px;margin-bottom:8px">&#9889;</div>
+        <div style="font-weight:600;margin-bottom:4px">Real-time Streaming</div>
+        <div style="font-size:12px;color:var(--text3)">OPRA live options data via WebSocket</div>
+      </div>
+      <div class="wire-solid" style="text-align:center;padding:24px 16px">
+        <div style="font-size:28px;margin-bottom:8px">&#128202;</div>
+        <div style="font-weight:600;margin-bottom:4px">Historical Analytics</div>
+        <div style="font-size:12px;color:var(--text3)">Track IV, OI, volume trends over any range</div>
+      </div>
+      <div class="wire-solid" style="text-align:center;padding:24px 16px">
+        <div style="font-size:28px;margin-bottom:8px">&#128270;</div>
+        <div style="font-weight:600;margin-bottom:4px">Market Trends</div>
+        <div style="font-size:12px;color:var(--text3)">Most active, unusual activity, options flow</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 2. TICKER OVERVIEW ===================== -->
+<div id="page-ticker" class="page">
+  <div class="wire-header">
+    <div>
+      <div style="font-size:22px;font-weight:700">TSLA <span style="font-size:14px;color:var(--text3);font-weight:400">Tesla, Inc.</span></div>
+      <div style="font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-top:4px">$278.42 <span class="wire-tag wire-green">+$8.64 (+3.21%)</span></div>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button class="wire-btn wire-btn-secondary">&#9734; Watchlist</button>
+      <button class="wire-btn wire-btn-primary">+ Save Trade</button>
+    </div>
+  </div>
+
+  <div class="chart-tabs">
+    <div class="chart-tab active">Overview</div>
+    <div class="chart-tab">P&L</div>
+    <div class="chart-tab">Open Interest</div>
+    <div class="chart-tab">Volume</div>
+    <div class="chart-tab">Max Pain</div>
+    <div class="chart-tab">IV Skew</div>
+    <div class="chart-tab">Probability</div>
+    <div class="chart-tab">Expected Move</div>
+    <div class="chart-tab">Greeks</div>
+    <div class="chart-tab">GEX</div>
+    <div class="chart-tab">DEX</div>
+    <div class="chart-tab">Unusual</div>
+    <div class="chart-tab">Chain</div>
+    <div class="chart-tab">History</div>
+  </div>
+
+  <div class="grid grid-main">
+    <div>
+      <div class="wire-solid" style="padding:0;overflow:hidden;position:relative">
+        <div style="display:flex;gap:12px;padding:12px 16px;align-items:center;border-bottom:1px solid var(--border)">
+          <span style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px">TradingView Lightweight Chart</span>
+          <span style="flex:1"></span>
+          <span class="tv-range" data-range="1M">1M</span>
+          <span class="tv-range" data-range="3M">3M</span>
+          <span class="tv-range active" data-range="6M">6M</span>
+          <span class="tv-range" data-range="1Y">1Y</span>
+          <span class="tv-range" data-range="All">All</span>
+        </div>
+        <div id="tv-ticker-chart" style="height:360px;width:100%"></div>
+      </div>
+
+      <div class="grid grid-4" style="margin-top:16px">
+        <div class="stat-card">
+          <div class="stat-label">IV (30d)</div>
+          <div class="stat-value">52.4%</div>
+          <div class="stat-change" style="color:var(--green)">+2.1% today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">IV Rank</div>
+          <div class="stat-value">72</div>
+          <div class="stat-change" style="color:var(--orange)">High</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total OI</div>
+          <div class="stat-value">8.4M</div>
+          <div class="stat-change" style="color:var(--text3)">P/C: 0.82</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Volume</div>
+          <div class="stat-value">1.2M</div>
+          <div class="stat-change" style="color:var(--text3)">P/C: 0.91</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="wire-solid">
+        <div style="font-weight:600;margin-bottom:12px">Company Profile</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.8">
+          <div><span style="color:var(--text3)">Sector:</span> Consumer Cyclical</div>
+          <div><span style="color:var(--text3)">Industry:</span> Auto Manufacturers</div>
+          <div><span style="color:var(--text3)">Market Cap:</span> $884.2B</div>
+          <div><span style="color:var(--text3)">P/E Ratio:</span> 68.4</div>
+          <div><span style="color:var(--text3)">52w Range:</span> $138.80 - $299.29</div>
+          <div><span style="color:var(--text3)">Avg Volume:</span> 98.2M</div>
+        </div>
+      </div>
+      <div class="wire-solid">
+        <div style="font-weight:600;margin-bottom:12px">Options Summary</div>
+        <div style="font-size:12px;color:var(--text2);line-height:2">
+          <div>Expected Move: <span style="color:var(--accent);font-weight:600">$12.40 (4.45%)</span></div>
+          <div>Max Pain: <span style="font-weight:600">$270.00</span></div>
+          <div>GEX Net: <span style="color:var(--green);font-weight:600">+$842M</span></div>
+          <div>DEX Net: <span style="color:var(--red);font-weight:600">-$1.2B</span></div>
+          <div>Next Earnings: <span style="font-weight:600">Apr 22</span></div>
+          <div>Next Exp: <span style="font-weight:600">Apr 04 (5d)</span></div>
+        </div>
+      </div>
+      <div class="wire-solid">
+        <div style="font-weight:600;margin-bottom:12px">Quick Links</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span class="wire-tag wire-blue" style="cursor:pointer">OI Chart</span>
+          <span class="wire-tag wire-blue" style="cursor:pointer">Greeks</span>
+          <span class="wire-tag wire-blue" style="cursor:pointer">GEX</span>
+          <span class="wire-tag wire-blue" style="cursor:pointer">IV Skew</span>
+          <span class="wire-tag wire-blue" style="cursor:pointer">P&L</span>
+          <span class="wire-tag wire-blue" style="cursor:pointer">Chain</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== GEX OVERLAY (STRIKE LEVELS ON PRICE CHART) ===================== -->
+<div id="page-gex-overlay" class="page">
+  <div class="wire-header">
+    <div>
+      <div style="font-size:22px;font-weight:700">SPX <span style="font-size:14px;color:var(--text3);font-weight:400">S&P 500 Index</span></div>
+      <div style="font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;margin-top:4px">5,850.20 <span class="wire-tag wire-green">+42.10 (+0.72%)</span></div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <select class="wire-input" style="width:auto;padding:8px 12px"><option>Exp: Nov 15, 2024 (14 DTE)</option><option>Exp: Nov 22, 2024</option><option>Exp: Dec 20, 2024</option></select>
+      <select class="wire-input" style="width:auto;padding:8px 12px"><option>Overlay: GEX Levels</option><option>Overlay: DEX Levels</option><option>Overlay: OI Walls</option></select>
+      <button class="wire-btn wire-btn-secondary">&#x26F6; Fullscreen</button>
+    </div>
+  </div>
+
+  <div class="chart-tabs">
+    <div class="chart-tab">Overview</div>
+    <div class="chart-tab">P&L</div>
+    <div class="chart-tab">Open Interest</div>
+    <div class="chart-tab">Volume</div>
+    <div class="chart-tab">Max Pain</div>
+    <div class="chart-tab">IV Skew</div>
+    <div class="chart-tab">Probability</div>
+    <div class="chart-tab">Expected Move</div>
+    <div class="chart-tab">Greeks</div>
+    <div class="chart-tab active">GEX</div>
+    <div class="chart-tab">DEX</div>
+    <div class="chart-tab">Unusual</div>
+  </div>
+
+  <!-- IVx Info Tooltip -->
+  <div id="gex-ivx-tooltip" style="position:absolute;top:180px;left:40px;z-index:20;background:rgba(18,18,26,.92);border:1px solid var(--border);border-radius:8px;padding:12px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;line-height:1.7;color:var(--text2);pointer-events:none;display:none">
+    <div><span style="color:var(--text)">IVx:</span> <span style="color:#fff;font-weight:700">15.05</span></div>
+    <div>2024-08-05 at <strong style="color:#fff">14 DTE</strong></div>
+    <div>Std1: &plusmn;163.61 [5387.19 - 5714.41]</div>
+    <div>Exp.mv: &plusmn;110.96 [5439.84 - 5661.76]</div>
+    <div>&Delta; 16: [P 5397.13 &middot; C 5668.14]</div>
+    <div>&uarr; Puts cost <span style="color:var(--orange)">+34.2%</span> more at Exp.mv</div>
+    <div>&larr; Weekly <span style="color:var(--orange)">&#127942;</span> IVx skew <span style="color:var(--red)">&darr; 6.29%</span> &middot; 11-14 DTE</div>
+  </div>
+
+  <div class="wire-solid" style="padding:0;overflow:hidden;position:relative">
+    <div style="display:flex;gap:12px;padding:12px 16px;align-items:center;border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px">TradingView + GEX Strike Overlay</span>
+      <span style="flex:1"></span>
+      <span class="tv-range">1D</span><span class="tv-range">5D</span><span class="tv-range">1M</span><span class="tv-range active">3M</span><span class="tv-range">6M</span><span class="tv-range">1Y</span>
+    </div>
+    <div id="tv-gex-chart" style="height:520px;width:100%"></div>
+  </div>
+
+  <!-- NETGEX callout box -->
+  <div style="display:flex;gap:16px;margin-top:16px;flex-wrap:wrap">
+    <div class="wire-solid" style="flex:1;min-width:280px;display:flex;align-items:center;gap:16px;padding:16px 20px">
+      <div style="width:40px;height:40px;border-radius:50%;background:rgba(239,68,68,.15);display:flex;align-items:center;justify-content:center"><span style="font-size:18px;color:var(--red)">&#9679;</span></div>
+      <div>
+        <div style="font-weight:700;font-size:16px;font-family:'JetBrains Mono',monospace">#1 &mdash; 5500</div>
+        <div style="font-size:12px;color:var(--text2)">Highest normalized (-) NETGEX level</div>
+      </div>
+    </div>
+    <div class="wire-solid" style="flex:1;min-width:280px;display:flex;align-items:center;gap:16px;padding:16px 20px">
+      <div style="width:40px;height:40px;border-radius:50%;background:rgba(0,230,230,.12);display:flex;align-items:center;justify-content:center"><span style="font-size:18px;color:#00e6e6">&#9679;</span></div>
+      <div>
+        <div style="font-weight:700;font-size:16px;font-family:'JetBrains Mono',monospace">HVL &mdash; 5820</div>
+        <div style="font-size:12px;color:var(--text2)">Hedging Volume Level &bull; 14 DTE (11/15)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Weekly IVx Skew callout -->
+  <div class="wire-solid" style="margin-top:16px;display:flex;align-items:center;gap:16px;padding:16px 20px">
+    <div style="width:40px;height:40px;border-radius:50%;background:rgba(245,158,11,.12);display:flex;align-items:center;justify-content:center"><span style="font-size:18px;color:var(--orange)">&#127942;</span></div>
+    <div>
+      <div style="font-weight:700;font-size:14px">Horizontal Weekly IVx Skew</div>
+      <div style="font-size:12px;color:var(--text2)">[SPX] Maximum of Weekly IVx skew is almost <strong style="color:var(--text)">7%</strong> between weeks <strong style="color:var(--text)">2-3</strong></div>
+    </div>
+  </div>
+
+  <div class="grid grid-4" style="margin-top:16px">
+    <div class="stat-card"><div class="stat-label">Call Wall</div><div class="stat-value" style="color:var(--green);font-size:18px">5,850</div><div class="stat-change" style="color:var(--text3)">89.85% / CALL Resistance</div></div>
+    <div class="stat-card"><div class="stat-label">Put Wall</div><div class="stat-value" style="color:var(--red);font-size:18px">5,700</div><div class="stat-change" style="color:var(--text3)">-79.54% / 2nd PUT Wall</div></div>
+    <div class="stat-card"><div class="stat-label">Gamma Flip</div><div class="stat-value" style="font-size:18px">5,800</div><div class="stat-change" style="color:var(--text3)">Positive above / Negative below</div></div>
+    <div class="stat-card"><div class="stat-label">HVL</div><div class="stat-value" style="color:#00e6e6;font-size:18px">5,820</div><div class="stat-change" style="color:var(--text3)">14 DTE (11/15)</div></div>
+  </div>
+</div>
+
+<!-- ===================== 3. OI CHART PAGE ===================== -->
+<div id="page-chart-oi" class="page">
+  <div class="wire-header">
+    <div>
+      <span style="font-weight:700;font-size:18px">TSLA</span>
+      <span style="color:var(--text3);margin:0 8px">&#8250;</span>
+      <span style="color:var(--accent);font-weight:600">Open Interest by Strike</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <select class="wire-input" style="width:auto;padding:8px 12px">
+        <option>Expiry: Apr 18, 2025</option>
+        <option>Expiry: Apr 25, 2025</option>
+        <option>Expiry: May 16, 2025</option>
+      </select>
+      <select class="wire-input" style="width:auto;padding:8px 12px">
+        <option>All Strikes</option>
+        <option>Near ATM (±10)</option>
+        <option>ITM Only</option>
+        <option>OTM Only</option>
+      </select>
+      <button class="wire-btn wire-btn-secondary" title="Fullscreen">&#x26F6; Fullscreen</button>
+      <button class="wire-btn wire-btn-secondary" title="Download CSV">&#x2B07; CSV</button>
+    </div>
+  </div>
+
+  <div class="chart-tabs">
+    <div class="chart-tab">Overview</div>
+    <div class="chart-tab">P&L</div>
+    <div class="chart-tab active">Open Interest</div>
+    <div class="chart-tab">Volume</div>
+    <div class="chart-tab">Max Pain</div>
+    <div class="chart-tab">IV Skew</div>
+    <div class="chart-tab">Probability</div>
+    <div class="chart-tab">Expected Move</div>
+    <div class="chart-tab">Greeks</div>
+    <div class="chart-tab">GEX</div>
+    <div class="chart-tab">DEX</div>
+    <div class="chart-tab">Unusual</div>
+  </div>
+
+  <div class="wire-box" style="position:relative">
+    <span class="label">Apache ECharts &mdash; Horizontal Bar</span>
+    <div style="display:flex;align-items:stretch;min-height:400px;margin-top:8px">
+      <div style="display:flex;flex-direction:column;justify-content:space-between;padding:20px 0;width:70px;text-align:right;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text3)">
+        <div>$320</div><div>$310</div><div>$300</div><div>$290</div><div style="color:var(--accent);font-weight:700">$280 &#9668;</div><div>$270</div><div>$260</div><div>$250</div><div>$240</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:20px 0">
+        <div style="display:flex;height:24px;gap:2px"><div style="width:15%;background:var(--green);border-radius:0 4px 4px 0;opacity:.7"></div><div style="width:8%;background:var(--red);border-radius:0 4px 4px 0;opacity:.7"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:22%;background:var(--green);border-radius:0 4px 4px 0;opacity:.7"></div><div style="width:12%;background:var(--red);border-radius:0 4px 4px 0;opacity:.7"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:35%;background:var(--green);border-radius:0 4px 4px 0;opacity:.7"></div><div style="width:20%;background:var(--red);border-radius:0 4px 4px 0;opacity:.7"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:50%;background:var(--green);border-radius:0 4px 4px 0;opacity:.8"></div><div style="width:30%;background:var(--red);border-radius:0 4px 4px 0;opacity:.8"></div></div>
+        <div style="display:flex;height:24px;gap:2px;position:relative"><div style="width:75%;background:var(--green);border-radius:0 4px 4px 0"></div><div style="width:55%;background:var(--red);border-radius:0 4px 4px 0"></div><div style="position:absolute;left:0;top:-4px;bottom:-4px;width:2px;background:var(--accent)"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:45%;background:var(--green);border-radius:0 4px 4px 0;opacity:.8"></div><div style="width:60%;background:var(--red);border-radius:0 4px 4px 0;opacity:.8"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:30%;background:var(--green);border-radius:0 4px 4px 0;opacity:.7"></div><div style="width:25%;background:var(--red);border-radius:0 4px 4px 0;opacity:.7"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:18%;background:var(--green);border-radius:0 4px 4px 0;opacity:.6"></div><div style="width:14%;background:var(--red);border-radius:0 4px 4px 0;opacity:.6"></div></div>
+        <div style="display:flex;height:24px;gap:2px"><div style="width:10%;background:var(--green);border-radius:0 4px 4px 0;opacity:.5"></div><div style="width:8%;background:var(--red);border-radius:0 4px 4px 0;opacity:.5"></div></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:20px;justify-content:center;margin-top:12px">
+      <span style="font-size:12px"><span style="display:inline-block;width:12px;height:12px;background:var(--green);border-radius:3px;vertical-align:middle;margin-right:4px"></span> Calls OI</span>
+      <span style="font-size:12px"><span style="display:inline-block;width:12px;height:12px;background:var(--red);border-radius:3px;vertical-align:middle;margin-right:4px"></span> Puts OI</span>
+      <span style="font-size:12px"><span style="display:inline-block;width:12px;height:2px;background:var(--accent);vertical-align:middle;margin-right:4px"></span> Current Price</span>
+    </div>
+  </div>
+
+  <div class="grid grid-3">
+    <div class="stat-card"><div class="stat-label">Calls OI Total</div><div class="stat-value" style="color:var(--green)">4.8M</div></div>
+    <div class="stat-card"><div class="stat-label">Puts OI Total</div><div class="stat-value" style="color:var(--red)">3.6M</div></div>
+    <div class="stat-card"><div class="stat-label">P/C OI Ratio</div><div class="stat-value">0.75</div></div>
+  </div>
+</div>
+
+<!-- ===================== 4. GREEKS CHART PAGE ===================== -->
+<div id="page-chart-greeks" class="page">
+  <div class="wire-header">
+    <div>
+      <span style="font-weight:700;font-size:18px">TSLA</span>
+      <span style="color:var(--text3);margin:0 8px">&#8250;</span>
+      <span style="color:var(--accent);font-weight:600">Greeks by Strike</span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <select class="wire-input" style="width:auto;padding:8px 12px"><option>Apr 18, 2025</option></select>
+      <select class="wire-input" style="width:auto;padding:8px 12px"><option>Delta</option><option>Gamma</option><option>Theta</option><option>Vega</option><option>Rho</option></select>
+      <button class="wire-btn wire-btn-secondary">&#x26F6; Fullscreen</button>
+    </div>
+  </div>
+
+  <div class="chart-tabs">
+    <div class="chart-tab">Overview</div>
+    <div class="chart-tab">P&L</div>
+    <div class="chart-tab">Open Interest</div>
+    <div class="chart-tab">Volume</div>
+    <div class="chart-tab">Max Pain</div>
+    <div class="chart-tab">IV Skew</div>
+    <div class="chart-tab">Probability</div>
+    <div class="chart-tab">Expected Move</div>
+    <div class="chart-tab active">Greeks</div>
+    <div class="chart-tab">GEX</div>
+    <div class="chart-tab">DEX</div>
+    <div class="chart-tab">Unusual</div>
+  </div>
+
+  <div class="wire-box">
+    <span class="label">Apache ECharts &mdash; Line + Area</span>
+    <div class="wire-chart" style="height:380px">
+      <div style="text-align:center">
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px">Delta vs. Strike Price</div>
+        <div style="font-size:12px;margin-top:4px">Calls (green line) &bull; Puts (red line)</div>
+        <div style="font-size:11px;color:var(--accent);margin-top:8px">Crosshair tooltip shows Delta, Gamma, Theta, Vega at hovered strike</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid grid-4">
+    <div class="stat-card"><div class="stat-label">ATM Delta (Call)</div><div class="stat-value" style="color:var(--green)">0.52</div></div>
+    <div class="stat-card"><div class="stat-label">ATM Gamma</div><div class="stat-value">0.0084</div></div>
+    <div class="stat-card"><div class="stat-label">ATM Theta</div><div class="stat-value" style="color:var(--red)">-0.42</div></div>
+    <div class="stat-card"><div class="stat-label">ATM Vega</div><div class="stat-value">0.31</div></div>
+  </div>
+</div>
+
+<!-- ===================== 5. OPTION CHAIN ===================== -->
+<div id="page-chain" class="page">
+  <div class="wire-header">
+    <div><span style="font-weight:700;font-size:18px">TSLA</span> <span style="color:var(--text3)">&#8250;</span> <span style="color:var(--accent);font-weight:600">Option Chain</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select class="wire-input" style="width:auto"><option>Apr 18, 2025 (19d)</option><option>Apr 25, 2025</option><option>May 16, 2025</option></select>
+      <select class="wire-input" style="width:auto"><option>All Strikes</option><option>Near ATM (&#177;10)</option></select>
+      <select class="wire-input" style="width:auto"><option>Layout: Straddle</option><option>Layout: Calls Only</option><option>Layout: Puts Only</option></select>
+    </div>
+  </div>
+
+  <div class="wire-solid" style="overflow-x:auto">
+    <table class="wire-table" style="font-size:12px">
+      <thead>
+        <tr>
+          <th colspan="6" style="text-align:center;color:var(--green);border-right:2px solid var(--border)">CALLS</th>
+          <th style="text-align:center;background:var(--surface2)">Strike</th>
+          <th colspan="6" style="text-align:center;color:var(--red)">PUTS</th>
+        </tr>
+        <tr>
+          <th>Bid</th><th>Ask</th><th>Last</th><th>Vol</th><th>OI</th><th style="border-right:2px solid var(--border)">IV</th>
+          <th style="background:var(--surface2);text-align:center"></th>
+          <th>Bid</th><th>Ask</th><th>Last</th><th>Vol</th><th>OI</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background:rgba(34,197,94,.03)">
+          <td>18.80</td><td>19.10</td><td>18.95</td><td>1,420</td><td>12,800</td><td style="border-right:2px solid var(--border)">54.2%</td>
+          <td style="text-align:center;background:var(--surface2);font-weight:700;color:var(--accent)">$260</td>
+          <td>0.85</td><td>0.98</td><td>0.92</td><td>820</td><td>6,400</td>
+        </tr>
+        <tr style="background:rgba(34,197,94,.03)">
+          <td>12.40</td><td>12.65</td><td>12.50</td><td>3,200</td><td>18,420</td><td style="border-right:2px solid var(--border)">51.8%</td>
+          <td style="text-align:center;background:var(--surface2);font-weight:700;color:var(--accent)">$270</td>
+          <td>2.80</td><td>3.05</td><td>2.90</td><td>2,100</td><td>15,200</td>
+        </tr>
+        <tr style="background:rgba(79,140,255,.06)">
+          <td>5.20</td><td>5.45</td><td>5.30</td><td>12,400</td><td>42,100</td><td style="border-right:2px solid var(--border)">49.6%</td>
+          <td style="text-align:center;background:rgba(79,140,255,.12);font-weight:700;color:var(--accent)">$280 &#9668;</td>
+          <td>6.10</td><td>6.35</td><td>6.20</td><td>8,900</td><td>35,600</td>
+        </tr>
+        <tr style="background:rgba(239,68,68,.03)">
+          <td>2.80</td><td>3.00</td><td>2.90</td><td>8,200</td><td>31,500</td><td style="border-right:2px solid var(--border)">50.1%</td>
+          <td style="text-align:center;background:var(--surface2);font-weight:700;color:var(--accent)">$290</td>
+          <td>11.40</td><td>11.70</td><td>11.55</td><td>4,100</td><td>22,400</td>
+        </tr>
+        <tr style="background:rgba(239,68,68,.03)">
+          <td>1.15</td><td>1.30</td><td>1.22</td><td>4,600</td><td>19,800</td><td style="border-right:2px solid var(--border)">52.4%</td>
+          <td style="text-align:center;background:var(--surface2);font-weight:700;color:var(--accent)">$300</td>
+          <td>18.20</td><td>18.50</td><td>18.35</td><td>1,800</td><td>14,200</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid grid-4" style="margin-top:16px">
+    <div class="stat-card"><div class="stat-label">Exp Date</div><div class="stat-value" style="font-size:16px">Apr 18</div><div class="stat-change" style="color:var(--text3)">19 DTE</div></div>
+    <div class="stat-card"><div class="stat-label">Contracts</div><div class="stat-value">248</div><div class="stat-change" style="color:var(--text3)">strikes listed</div></div>
+    <div class="stat-card"><div class="stat-label">Total OI</div><div class="stat-value">890K</div></div>
+    <div class="stat-card"><div class="stat-label">Total Volume</div><div class="stat-value">124K</div></div>
+  </div>
+</div>
+
+<!-- ===================== 6. HISTORY BUILDER ===================== -->
+<div id="page-history" class="page">
+  <div class="wire-header">
+    <div><span style="font-weight:700;font-size:18px">TSLA</span> <span style="color:var(--text3)">&#8250;</span> <span style="color:var(--accent);font-weight:600">Historical Chart Builder</span></div>
+    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+      <select class="wire-input" style="width:auto"><option>Metric: IV (30d)</option><option>IV Rank</option><option>IV Percentile</option><option>Total OI</option><option>Total Volume</option><option>P/C Ratio (OI)</option><option>P/C Ratio (Vol)</option><option>Max Pain</option><option>Expected Move</option><option>GEX Net</option><option>DEX Net</option></select>
+      <input type="date" class="wire-input" style="width:auto" value="2024-03-30">
+      <span style="color:var(--text3)">to</span>
+      <input type="date" class="wire-input" style="width:auto" value="2025-03-30">
+      <button class="wire-btn wire-btn-secondary">&#x2B07; Export CSV</button>
+    </div>
+  </div>
+
+  <div class="wire-solid" style="padding:0;overflow:hidden">
+    <div style="display:flex;gap:12px;padding:12px 16px;align-items:center;border-bottom:1px solid var(--border)">
+      <span style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px">TradingView &mdash; IV (30d) History</span>
+      <span style="flex:1"></span>
+      <span class="tv-range">1M</span><span class="tv-range">3M</span><span class="tv-range">6M</span><span class="tv-range active">1Y</span><span class="tv-range">2Y</span><span class="tv-range">All</span>
+    </div>
+    <div id="tv-history-chart" style="height:380px;width:100%"></div>
+  </div>
+
+  <div class="wire-solid">
+    <div style="font-weight:600;margin-bottom:12px">Available History Metrics</div>
+    <div style="display:flex;flex-wrap:wrap;gap:8px">
+      <span class="wire-tag wire-blue">IV (30d)</span>
+      <span class="wire-tag wire-blue">IV Rank</span>
+      <span class="wire-tag wire-blue">IV Percentile</span>
+      <span class="wire-tag wire-blue">Total OI</span>
+      <span class="wire-tag wire-blue">Total Volume</span>
+      <span class="wire-tag wire-blue">P/C Ratio (OI)</span>
+      <span class="wire-tag wire-blue">P/C Ratio (Vol)</span>
+      <span class="wire-tag wire-blue">Max Pain</span>
+      <span class="wire-tag wire-blue">Expected Move</span>
+      <span class="wire-tag wire-blue">GEX Net</span>
+      <span class="wire-tag wire-blue">DEX Net</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 7. TRENDING / MARKET OVERVIEW ===================== -->
+<div id="page-trending" class="page">
+  <div class="page-title">Market Trends</div>
+  <div class="page-subtitle">Discover the most active tickers and contracts across the options market</div>
+
+  <div class="grid grid-sidebar">
+    <div class="sidebar-nav">
+      <div class="sidebar-label">By Ticker</div>
+      <div class="sidebar-item active"><span style="width:18px;text-align:center">&#128293;</span> Most Active</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128200;</span> Highest OI</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128640;</span> Highest IV</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128314;</span> High IV Rank</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128315;</span> Low IV Rank</div>
+      <div class="sidebar-label" style="padding-top:16px">By Contract</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128293;</span> Most Active</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128200;</span> Highest OI</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128640;</span> Highest IV</div>
+      <div class="sidebar-label" style="padding-top:16px">Flow</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128161;</span> Unusual Activity</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#127754;</span> Options Flow</div>
+    </div>
+    <div>
+      <div class="wire-solid">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <div style="font-weight:600">Most Active Tickers</div>
+          <div style="display:flex;gap:8px">
+            <input class="wire-input" style="width:200px;padding:8px 12px" placeholder="Filter tickers...">
+            <button class="wire-btn wire-btn-secondary">&#x2B07; Export</button>
+          </div>
+        </div>
+        <table class="wire-table">
+          <thead><tr><th>#</th><th>Ticker</th><th>Price</th><th>Change</th><th>Opt Volume</th><th>Avg Vol</th><th>Vol/Avg</th><th>IV Rank</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td class="ticker">TSLA</td><td>$278.42</td><td><span class="wire-tag wire-green">+3.21%</span></td><td>1,248,200</td><td>820,400</td><td><span style="color:var(--accent);font-weight:600">1.52x</span></td><td>72</td></tr>
+            <tr><td>2</td><td class="ticker">NVDA</td><td>$142.18</td><td><span class="wire-tag wire-red">-1.45%</span></td><td>2,841,000</td><td>1,920,000</td><td><span style="color:var(--accent);font-weight:600">1.48x</span></td><td>85</td></tr>
+            <tr><td>3</td><td class="ticker">SPY</td><td>$584.90</td><td><span class="wire-tag wire-green">+0.82%</span></td><td>5,120,400</td><td>4,100,000</td><td><span style="color:var(--accent);font-weight:600">1.25x</span></td><td>34</td></tr>
+            <tr><td>4</td><td class="ticker">META</td><td>$512.30</td><td><span class="wire-tag wire-green">+2.10%</span></td><td>620,800</td><td>410,200</td><td><span style="color:var(--accent);font-weight:600">1.51x</span></td><td>62</td></tr>
+            <tr><td>5</td><td class="ticker">AMD</td><td>$168.44</td><td><span class="wire-tag wire-red">-0.92%</span></td><td>890,100</td><td>720,000</td><td><span style="color:var(--accent);font-weight:600">1.24x</span></td><td>55</td></tr>
+            <tr><td>6</td><td class="ticker">GOOG</td><td>$178.22</td><td><span class="wire-tag wire-green">+1.08%</span></td><td>412,000</td><td>340,000</td><td><span style="color:var(--accent);font-weight:600">1.21x</span></td><td>38</td></tr>
+            <tr><td>7</td><td class="ticker">MSFT</td><td>$428.10</td><td><span class="wire-tag wire-green">+0.55%</span></td><td>380,000</td><td>310,000</td><td><span style="color:var(--accent);font-weight:600">1.23x</span></td><td>32</td></tr>
+          </tbody>
+        </table>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px;color:var(--text3)">
+          <span>Showing 1-7 of 50</span>
+          <div style="display:flex;gap:4px">
+            <button class="wire-btn wire-btn-secondary" style="padding:6px 12px;font-size:12px">&laquo; Prev</button>
+            <button class="wire-btn wire-btn-primary" style="padding:6px 12px;font-size:12px">Next &raquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 8. PRICING ===================== -->
+<div id="page-pricing" class="page">
+  <div style="text-align:center;margin-bottom:32px">
+    <div class="page-title">Plans & Pricing</div>
+    <div class="page-subtitle">Choose the plan that fits your trading style</div>
+    <div style="display:flex;gap:4px;justify-content:center;margin-top:16px">
+      <button class="wire-btn wire-btn-primary" style="border-radius:8px 0 0 8px">Monthly</button>
+      <button class="wire-btn wire-btn-secondary" style="border-radius:0 8px 8px 0">Annual <span class="wire-tag wire-green" style="margin-left:4px">Save 20%</span></button>
+    </div>
+  </div>
+  <div class="grid grid-3">
+    <div class="pricing-card">
+      <h3>Free</h3>
+      <div style="color:var(--text3);font-size:13px">Get started</div>
+      <div class="price">$0<span>/mo</span></div>
+      <button class="wire-btn wire-btn-secondary" style="width:100%">Current Plan</button>
+      <ul>
+        <li>5 basic charts</li>
+        <li>Delayed data (15 min)</li>
+        <li>Market trends</li>
+        <li class="disabled">Full-screen charts</li>
+        <li class="disabled">Data export (CSV)</li>
+        <li class="disabled">Real-time data</li>
+        <li class="disabled">Watchlists</li>
+        <li class="disabled">Saved trades</li>
+      </ul>
+    </div>
+    <div class="pricing-card featured">
+      <h3>Premium</h3>
+      <div style="color:var(--accent);font-size:13px;font-weight:600">Most popular</div>
+      <div class="price">$29<span>/mo</span></div>
+      <button class="wire-btn wire-btn-primary" style="width:100%">Upgrade to Premium</button>
+      <ul>
+        <li>All 20+ charts</li>
+        <li>Delayed data (15 min)</li>
+        <li>Market trends + IV Rank</li>
+        <li>Full-screen charts</li>
+        <li>Data export (CSV)</li>
+        <li>Watchlists & saved trades</li>
+        <li>Historical chart builder</li>
+        <li class="disabled">Real-time OPRA data</li>
+      </ul>
+    </div>
+    <div class="pricing-card">
+      <h3>Ultimate</h3>
+      <div style="color:var(--purple);font-size:13px;font-weight:600">Power traders</div>
+      <div class="price">$79<span>/mo</span></div>
+      <button class="wire-btn wire-btn-secondary" style="width:100%;border-color:var(--purple);color:var(--purple)">Upgrade to Ultimate</button>
+      <ul>
+        <li>All 20+ charts</li>
+        <li style="color:var(--green);font-weight:600">Real-time OPRA data</li>
+        <li>Market trends + IV Rank</li>
+        <li>Full-screen charts</li>
+        <li>Data export (CSV)</li>
+        <li>Watchlists & saved trades</li>
+        <li>Historical chart builder</li>
+        <li>Priority email support</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="wire-solid" style="margin-top:32px">
+    <div style="font-weight:600;margin-bottom:16px;text-align:center">Feature Comparison</div>
+    <table class="wire-table" style="text-align:center">
+      <thead><tr><th style="text-align:left">Feature</th><th>Free</th><th style="color:var(--accent)">Premium</th><th style="color:var(--purple)">Ultimate</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left">Chart types</td><td>5</td><td>20+</td><td>20+</td></tr>
+        <tr><td style="text-align:left">Data speed</td><td>15 min delay</td><td>15 min delay</td><td style="color:var(--green);font-weight:600">Real-time</td></tr>
+        <tr><td style="text-align:left">Historical builder</td><td style="color:var(--text3)">&#10007;</td><td style="color:var(--green)">&#10003;</td><td style="color:var(--green)">&#10003;</td></tr>
+        <tr><td style="text-align:left">CSV export</td><td style="color:var(--text3)">&#10007;</td><td style="color:var(--green)">&#10003;</td><td style="color:var(--green)">&#10003;</td></tr>
+        <tr><td style="text-align:left">Watchlists</td><td style="color:var(--text3)">&#10007;</td><td style="color:var(--green)">&#10003; (5)</td><td style="color:var(--green)">&#10003; (&#8734;)</td></tr>
+        <tr><td style="text-align:left">Support</td><td>Community</td><td>Email</td><td>Priority</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ===================== 9. BLOG ===================== -->
+<div id="page-blog" class="page">
+  <div class="page-title">Blog</div>
+  <div class="page-subtitle">News, updates, and educational content from the MarketBull team</div>
+  <div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+    <span class="wire-tag wire-blue" style="cursor:pointer;padding:6px 14px">All</span>
+    <span class="wire-tag" style="cursor:pointer;padding:6px 14px;background:var(--surface);color:var(--text2)">Product Updates</span>
+    <span class="wire-tag" style="cursor:pointer;padding:6px 14px;background:var(--surface);color:var(--text2)">Option Trading</span>
+    <span class="wire-tag" style="cursor:pointer;padding:6px 14px;background:var(--surface);color:var(--text2)">Tutorials</span>
+    <span class="wire-tag" style="cursor:pointer;padding:6px 14px;background:var(--surface);color:var(--text2)">Market Analysis</span>
+  </div>
+  <div class="grid grid-2">
+    <div class="wire-solid" style="cursor:pointer">
+      <div class="wire-placeholder" style="height:160px;margin-bottom:16px;border-radius:8px">Cover Image</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px"><span class="wire-tag wire-blue">Product Updates</span><span style="font-size:12px;color:var(--text3)">Mar 10, 2026</span></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">New: Gamma Flip, Gamma Profile, Call & Put Walls</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.5">The GEX chart just got its biggest update yet with Call Wall, Put Wall, Gamma Flip, and combined chart view.</div>
+    </div>
+    <div class="wire-solid" style="cursor:pointer">
+      <div class="wire-placeholder" style="height:160px;margin-bottom:16px;border-radius:8px">Cover Image</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px"><span class="wire-tag wire-blue">Product Updates</span><span style="font-size:12px;color:var(--text3)">Jan 17, 2026</span></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">What's New in the Profit and Loss Chart</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.5">IV adjustment support, dual-line pre-expiry analysis, fractional DTE, and multiple break-even points.</div>
+    </div>
+    <div class="wire-solid" style="cursor:pointer">
+      <div class="wire-placeholder" style="height:160px;margin-bottom:16px;border-radius:8px">Cover Image</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px"><span class="wire-tag wire-orange">Option Trading</span><span style="font-size:12px;color:var(--text3)">Jan 27, 2026</span></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">6 Ways Options Trading Can Enhance Your Portfolio</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.5">Explore the six key advantages of trading options over stocks, from leverage to income generation.</div>
+    </div>
+    <div class="wire-solid" style="cursor:pointer">
+      <div class="wire-placeholder" style="height:160px;margin-bottom:16px;border-radius:8px">Cover Image</div>
+      <div style="display:flex;gap:8px;margin-bottom:8px"><span class="wire-tag wire-orange">Option Trading</span><span style="font-size:12px;color:var(--text3)">Dec 16, 2025</span></div>
+      <div style="font-size:16px;font-weight:700;margin-bottom:6px">How Accurate is Max Pain in Option Trading?</div>
+      <div style="font-size:13px;color:var(--text2);line-height:1.5">An analysis of Max Pain theory, its predictive accuracy, and how traders can use this indicator effectively.</div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:24px">
+    <button class="wire-btn wire-btn-secondary">Load More Posts</button>
+  </div>
+</div>
+
+<!-- ===================== 10. DOCS / FAQ ===================== -->
+<div id="page-docs" class="page">
+  <div class="grid grid-sidebar">
+    <div>
+      <div class="sidebar-nav">
+        <div class="sidebar-label">Getting Started</div>
+        <div class="sidebar-item active"><span style="width:18px;text-align:center">&#128218;</span> Introduction</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128269;</span> Searching Tickers</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128179;</span> Plans & Upgrading</div>
+        <div class="sidebar-label" style="padding-top:16px">Chart Guides</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128200;</span> Open Interest</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128202;</span> Volume</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128201;</span> Max Pain</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#127919;</span> IV Skew</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128640;</span> Greeks</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#9889;</span> GEX / DEX</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128176;</span> P&L Chart</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128202;</span> Probability</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128200;</span> Expected Move</div>
+        <div class="sidebar-label" style="padding-top:16px">Features</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128225;</span> Real-time Data</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128195;</span> Watchlists</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128190;</span> Saving Trades</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128196;</span> CSV Export</div>
+        <div class="sidebar-label" style="padding-top:16px">Support</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#10067;</span> FAQ</div>
+        <div class="sidebar-item"><span style="width:18px;text-align:center">&#128231;</span> Contact Us</div>
+      </div>
+    </div>
+    <div>
+      <div class="wire-solid">
+        <h2 style="font-size:22px;margin-bottom:16px">Welcome to MarketBull</h2>
+        <div style="font-size:14px;color:var(--text2);line-height:1.8">
+          <p style="margin-bottom:12px">MarketBull provides charts and analytical tools designed for options traders. Our platform delivers 20+ interactive charts, real-time data streaming, historical analytics, and market trend discovery.</p>
+          <p style="margin-bottom:12px">Whether you're analyzing open interest distributions, monitoring Greeks, tracking GEX/DEX flows, or building historical comparisons, MarketBull gives you the data edge.</p>
+          <div class="wire-box" style="margin:20px 0">
+            <span class="label">Quickstart</span>
+            <div style="padding:8px 0">
+              <div style="margin-bottom:8px"><strong>1.</strong> Search for any ticker using <kbd style="background:var(--surface2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;font-size:12px;font-family:'JetBrains Mono',monospace">Cmd+K</kbd></div>
+              <div style="margin-bottom:8px"><strong>2.</strong> Browse tabs: OI, Volume, Greeks, GEX, IV Skew, P&L, etc.</div>
+              <div style="margin-bottom:8px"><strong>3.</strong> Use the History tab for time-series analysis</div>
+              <div><strong>4.</strong> Upgrade to Premium or Ultimate for all features</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wire-solid">
+        <h3 style="font-size:18px;margin-bottom:16px">Frequently Asked Questions</h3>
+        <div style="border-bottom:1px solid var(--border);padding:16px 0;cursor:pointer">
+          <div style="font-weight:600;display:flex;justify-content:space-between"><span>What data source does MarketBull use?</span><span style="color:var(--text3)">+</span></div>
+          <div style="font-size:13px;color:var(--text2);margin-top:8px">We use Intrinio OPRA data for all options pricing, Greeks, and volume data.</div>
+        </div>
+        <div style="border-bottom:1px solid var(--border);padding:16px 0;cursor:pointer">
+          <div style="font-weight:600;display:flex;justify-content:space-between"><span>Is the data real-time?</span><span style="color:var(--text3)">+</span></div>
+        </div>
+        <div style="border-bottom:1px solid var(--border);padding:16px 0;cursor:pointer">
+          <div style="font-weight:600;display:flex;justify-content:space-between"><span>Can I cancel my subscription anytime?</span><span style="color:var(--text3)">+</span></div>
+        </div>
+        <div style="padding:16px 0;cursor:pointer">
+          <div style="font-weight:600;display:flex;justify-content:space-between"><span>How are Greeks calculated?</span><span style="color:var(--text3)">+</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 11. AUTH ===================== -->
+<div id="page-auth" class="page">
+  <div class="grid grid-2" style="max-width:900px;margin:40px auto">
+    <div class="wire-solid" style="padding:32px">
+      <h2 style="font-size:22px;margin-bottom:6px">Sign In</h2>
+      <div style="color:var(--text3);font-size:13px;margin-bottom:24px">Welcome back to MarketBull</div>
+      <div style="margin-bottom:16px">
+        <button class="wire-btn wire-btn-secondary" style="width:100%;padding:12px;display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="font-size:16px">G</span> Continue with Google
+        </button>
+      </div>
+      <div style="text-align:center;color:var(--text3);font-size:12px;margin-bottom:16px">or sign in with email</div>
+      <div style="margin-bottom:16px"><label style="font-size:12px;color:var(--text3);display:block;margin-bottom:6px">Email</label><input class="wire-input" placeholder="you@example.com"></div>
+      <div style="margin-bottom:24px"><label style="font-size:12px;color:var(--text3);display:block;margin-bottom:6px">Password</label><input class="wire-input" type="password" placeholder="********"></div>
+      <button class="wire-btn wire-btn-primary" style="width:100%;padding:12px">Sign In</button>
+      <div style="text-align:center;margin-top:16px;font-size:13px;color:var(--text3)">Don't have an account? <a style="color:var(--accent);cursor:pointer">Sign Up</a></div>
+      <div style="text-align:center;margin-top:8px;font-size:12px"><a style="color:var(--text3);cursor:pointer">Forgot password?</a></div>
+    </div>
+    <div class="wire-solid" style="padding:32px">
+      <h2 style="font-size:22px;margin-bottom:6px">Create Account</h2>
+      <div style="color:var(--text3);font-size:13px;margin-bottom:24px">Start with MarketBull Free</div>
+      <div style="margin-bottom:16px">
+        <button class="wire-btn wire-btn-secondary" style="width:100%;padding:12px;display:flex;align-items:center;justify-content:center;gap:8px">
+          <span style="font-size:16px">G</span> Continue with Google
+        </button>
+      </div>
+      <div style="text-align:center;color:var(--text3);font-size:12px;margin-bottom:16px">or create with email</div>
+      <div style="margin-bottom:16px"><label style="font-size:12px;color:var(--text3);display:block;margin-bottom:6px">Name</label><input class="wire-input" placeholder="Your name"></div>
+      <div style="margin-bottom:16px"><label style="font-size:12px;color:var(--text3);display:block;margin-bottom:6px">Email</label><input class="wire-input" placeholder="you@example.com"></div>
+      <div style="margin-bottom:24px"><label style="font-size:12px;color:var(--text3);display:block;margin-bottom:6px">Password</label><input class="wire-input" type="password" placeholder="Min 8 characters"></div>
+      <button class="wire-btn wire-btn-primary" style="width:100%;padding:12px">Create Account</button>
+      <div style="text-align:center;margin-top:16px;font-size:13px;color:var(--text3)">Already have an account? <a style="color:var(--accent);cursor:pointer">Sign In</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 12. USER DASHBOARD ===================== -->
+<div id="page-dashboard" class="page">
+  <div class="wire-header">
+    <div>
+      <div style="font-size:22px;font-weight:700">Dashboard</div>
+      <div style="font-size:13px;color:var(--text3)">Welcome back, Punit</div>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="wire-tag wire-blue" style="padding:6px 14px">Premium Plan</span>
+      <button class="wire-btn wire-btn-secondary">Manage Billing</button>
+      <button class="wire-btn wire-btn-secondary">Settings</button>
+    </div>
+  </div>
+
+  <div class="grid grid-sidebar" style="grid-template-columns:220px 1fr">
+    <div class="sidebar-nav">
+      <div class="sidebar-item active"><span style="width:18px;text-align:center">&#127968;</span> Overview</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#9734;</span> Watchlists</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128190;</span> Saved Trades</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128202;</span> Recent Charts</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#128179;</span> Billing</div>
+      <div class="sidebar-item"><span style="width:18px;text-align:center">&#9881;</span> Account Settings</div>
+    </div>
+    <div>
+      <div class="section">
+        <div class="section-title"><span class="dot"></span> Your Watchlists</div>
+        <div class="grid grid-2">
+          <div class="wire-solid">
+            <div style="font-weight:600;margin-bottom:12px">Tech Earnings</div>
+            <table class="wire-table">
+              <tbody>
+                <tr><td class="ticker">TSLA</td><td>$278.42</td><td><span class="wire-tag wire-green">+3.21%</span></td><td style="color:var(--text3)">IV: 52%</td></tr>
+                <tr><td class="ticker">NVDA</td><td>$142.18</td><td><span class="wire-tag wire-red">-1.45%</span></td><td style="color:var(--text3)">IV: 61%</td></tr>
+                <tr><td class="ticker">AAPL</td><td>$198.55</td><td><span class="wire-tag wire-green">+0.31%</span></td><td style="color:var(--text3)">IV: 28%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="wire-solid">
+            <div style="font-weight:600;margin-bottom:12px">High IV Plays</div>
+            <table class="wire-table">
+              <tbody>
+                <tr><td class="ticker">GME</td><td>$28.40</td><td><span class="wire-tag wire-red">-2.10%</span></td><td style="color:var(--text3)">IV: 112%</td></tr>
+                <tr><td class="ticker">MARA</td><td>$22.80</td><td><span class="wire-tag wire-green">+5.20%</span></td><td style="color:var(--text3)">IV: 98%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-title"><span class="dot"></span> Saved Trades</div>
+        <div class="wire-solid">
+          <table class="wire-table">
+            <thead><tr><th>Date</th><th>Ticker</th><th>Strategy</th><th>Contracts</th><th>Entry</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Mar 28</td><td class="ticker">TSLA</td><td>Bull Call Spread</td><td>$280/$300 Apr 18</td><td>$5.30</td><td><span class="wire-tag wire-green">Open</span></td><td><a style="color:var(--accent);cursor:pointer;font-size:12px">View P&L</a></td></tr>
+              <tr><td>Mar 25</td><td class="ticker">NVDA</td><td>Iron Condor</td><td>$130/$135/$155/$160 Apr 18</td><td>$2.10</td><td><span class="wire-tag wire-green">Open</span></td><td><a style="color:var(--accent);cursor:pointer;font-size:12px">View P&L</a></td></tr>
+              <tr><td>Mar 20</td><td class="ticker">SPY</td><td>Put</td><td>$580 Apr 04</td><td>$4.80</td><td><span class="wire-tag wire-red">Closed -$1.20</span></td><td><a style="color:var(--accent);cursor:pointer;font-size:12px">Details</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer-note">
+  MarketBull Wireframes &mdash; 12 Screens &mdash; Phase 0 Design Reference<br>
+  Click the tabs above to navigate between pages
+</div>
+
+<script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
+<script>
+document.querySelectorAll('.screen-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('page-' + tab.dataset.page).classList.add('active');
+    window.scrollTo({top: 0, behavior: 'smooth'});
+    initChartsIfNeeded(tab.dataset.page);
+  });
+});
+
+document.querySelectorAll('.tv-range').forEach(r => {
+  r.addEventListener('click', () => {
+    r.parentElement.querySelectorAll('.tv-range').forEach(s => s.classList.remove('active'));
+    r.classList.add('active');
+  });
+});
+
+const chartOpts = {
+  layout: { background: { color: '#12121a' }, textColor: '#6a6a82', fontFamily: "'JetBrains Mono', monospace", fontSize: 11 },
+  grid: { vertLines: { color: '#1e1e2e' }, horzLines: { color: '#1e1e2e' } },
+  crosshair: { mode: 0, vertLine: { color: '#4f8cff44', width: 1, style: 2 }, horzLine: { color: '#4f8cff44', width: 1, style: 2 } },
+  rightPriceScale: { borderColor: '#2a2a3a', scaleMargins: { top: 0.05, bottom: 0.15 } },
+  timeScale: { borderColor: '#2a2a3a', timeVisible: false },
+  handleScroll: { mouseWheel: true, pressedMouseMove: true },
+  handleScale: { mouseWheel: true, pinch: true },
+};
+
+function genCandles(basePrice, days, volatility) {
+  const data = [];
+  let price = basePrice;
+  const start = new Date('2024-09-01');
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    if (d.getDay() === 0 || d.getDay() === 6) continue;
+    const change = (Math.random() - 0.48) * volatility;
+    const open = price;
+    const close = price + change;
+    const high = Math.max(open, close) + Math.random() * volatility * 0.5;
+    const low = Math.min(open, close) - Math.random() * volatility * 0.5;
+    price = close;
+    data.push({ time: d.toISOString().split('T')[0], open: +open.toFixed(2), high: +high.toFixed(2), low: +low.toFixed(2), close: +close.toFixed(2) });
+  }
+  return data;
+}
+
+function genVolume(candles) {
+  return candles.map(c => ({ time: c.time, value: Math.floor(Math.random() * 80000000 + 20000000), color: c.close >= c.open ? 'rgba(34,197,94,.25)' : 'rgba(239,68,68,.25)' }));
+}
+
+function genLine(baseVal, days, drift, vol) {
+  const data = [];
+  let v = baseVal;
+  const start = new Date('2024-03-30');
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    if (d.getDay() === 0 || d.getDay() === 6) continue;
+    v += drift + (Math.random() - 0.5) * vol;
+    v = Math.max(10, Math.min(90, v));
+    data.push({ time: d.toISOString().split('T')[0], value: +v.toFixed(2) });
+  }
+  return data;
+}
+
+const chartsInit = {};
+
+function initChartsIfNeeded(pageId) {
+  if (pageId === 'ticker' && !chartsInit.ticker) {
+    chartsInit.ticker = true;
+    const el = document.getElementById('tv-ticker-chart');
+    const chart = LightweightCharts.createChart(el, { ...chartOpts, width: el.clientWidth, height: 360 });
+    const candles = genCandles(220, 180, 8);
+    const cs = chart.addCandlestickSeries({ upColor: '#22c55e', downColor: '#ef4444', borderUpColor: '#22c55e', borderDownColor: '#ef4444', wickUpColor: '#22c55e88', wickDownColor: '#ef444488' });
+    cs.setData(candles);
+    const vs = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
+    chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
+    vs.setData(genVolume(candles));
+    chart.timeScale().fitContent();
+    new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth })).observe(el);
+  }
+  if (pageId === 'history' && !chartsInit.history) {
+    chartsInit.history = true;
+    const el = document.getElementById('tv-history-chart');
+    const chart = LightweightCharts.createChart(el, { ...chartOpts, width: el.clientWidth, height: 380 });
+    const ls = chart.addAreaSeries({ topColor: 'rgba(79,140,255,.28)', bottomColor: 'rgba(79,140,255,.02)', lineColor: '#4f8cff', lineWidth: 2 });
+    ls.setData(genLine(42, 365, 0.03, 3));
+    ls.applyOptions({ priceFormat: { type: 'custom', formatter: v => v.toFixed(1) + '%' } });
+    chart.timeScale().fitContent();
+    new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth })).observe(el);
+  }
+  if (pageId === 'gex-overlay' && !chartsInit.gex) {
+    chartsInit.gex = true;
+    const el = document.getElementById('tv-gex-chart');
+    const chart = LightweightCharts.createChart(el, { ...chartOpts, width: el.clientWidth, height: 520, rightPriceScale: { ...chartOpts.rightPriceScale, scaleMargins: { top: 0.02, bottom: 0.02 } } });
+
+    const candles = genCandles(5600, 90, 40);
+    const cs = chart.addCandlestickSeries({ upColor: '#22c55e', downColor: '#ef4444', borderUpColor: '#22c55e', borderDownColor: '#ef4444', wickUpColor: '#22c55e88', wickDownColor: '#ef444488' });
+    cs.setData(candles);
+
+    const vs = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
+    chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } });
+    vs.setData(genVolume(candles));
+
+    const ivLine = chart.addLineSeries({ color: '#00bfff', lineWidth: 2, lineStyle: 0, crosshairMarkerVisible: false, priceScaleId: 'right', lastValueVisible: false, priceLineVisible: false });
+    const ivData = [];
+    const lastCandle = candles[candles.length - 1];
+    const lastPrice = lastCandle ? lastCandle.close : 5850;
+    for (let i = 0; i < candles.length; i++) {
+      const t = i / candles.length;
+      const curve = lastPrice - 400 + (800 * Math.pow(t, 0.4));
+      ivData.push({ time: candles[i].time, value: +curve.toFixed(2) });
+    }
+    ivLine.setData(ivData);
+
+    const levels = [
+      { price: lastPrice + 100, title: '86.74% / 2nd CALL Wall', color: '#22c55e', lineWidth: 2, lineStyle: 0, axisLabelVisible: true },
+      { price: lastPrice + 60, title: '53.16% / 3rd CALL Wall', color: '#22c55e', lineWidth: 1, lineStyle: 2, axisLabelVisible: true },
+      { price: lastPrice + 10, title: '89.85% / CALL Resistance', color: '#22c55e', lineWidth: 3, lineStyle: 0, axisLabelVisible: true },
+      { price: lastPrice - 30, title: 'HVL \u25CF 14 DTE (11/15)', color: '#00e6e6', lineWidth: 2, lineStyle: 0, axisLabelVisible: true },
+      { price: lastPrice - 150, title: '-79.54% / 2nd PUT Wall', color: '#ef4444', lineWidth: 2, lineStyle: 0, axisLabelVisible: true },
+      { price: lastPrice - 350, title: 'Highest negative NETGEX', color: '#ef4444', lineWidth: 2, lineStyle: 2, axisLabelVisible: true },
+      { price: lastPrice - 450, title: '-69.35% / 3rd PUT Wall', color: '#ef4444', lineWidth: 1, lineStyle: 2, axisLabelVisible: true },
+    ];
+
+    levels.forEach(l => {
+      cs.createPriceLine({
+        price: l.price,
+        color: l.color,
+        lineWidth: l.lineWidth,
+        lineStyle: l.lineStyle,
+        axisLabelVisible: l.axisLabelVisible,
+        title: l.title,
+      });
+    });
+
+    const markers = [];
+    const last5 = candles.slice(-20);
+    const high1 = last5.reduce((a, b) => a.high > b.high ? a : b);
+    markers.push({ time: high1.time, position: 'aboveBar', color: '#22c55e', shape: 'arrowDown', text: 'Call Wall' });
+    const low1 = last5.reduce((a, b) => a.low < b.low ? a : b);
+    markers.push({ time: low1.time, position: 'belowBar', color: '#ef4444', shape: 'arrowUp', text: 'Put Wall' });
+    cs.setMarkers(markers.sort((a, b) => a.time < b.time ? -1 : 1));
+
+    chart.timeScale().fitContent();
+    new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth })).observe(el);
+
+    document.getElementById('gex-ivx-tooltip').style.display = 'block';
+  }
+}
+</script>
+</body>
+</html>
