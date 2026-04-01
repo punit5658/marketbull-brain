@@ -265,7 +265,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
     <div>
       <div class="wire-solid" style="padding:0;overflow:hidden;position:relative">
         <div style="display:flex;gap:12px;padding:12px 16px;align-items:center;border-bottom:1px solid var(--border)">
-          <span style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px">TradingView Lightweight Chart</span>
+          <span style="font-size:11px;color:var(--accent);font-weight:600;text-transform:uppercase;letter-spacing:.5px">Price + Expected Move Cone</span>
           <span style="flex:1"></span>
           <span class="tv-range" data-range="1M">1M</span>
           <span class="tv-range" data-range="3M">3M</span>
@@ -273,7 +273,86 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
           <span class="tv-range" data-range="1Y">1Y</span>
           <span class="tv-range" data-range="All">All</span>
         </div>
-        <div id="tv-ticker-chart" style="height:360px;width:100%"></div>
+        <div id="tv-ticker-chart" style="height:420px;width:100%"></div>
+        <div style="display:flex;gap:20px;justify-content:center;padding:8px 16px 12px;border-top:1px solid var(--border);font-size:11px">
+          <span><span style="display:inline-block;width:20px;height:2px;background:#4f8cff;vertical-align:middle;margin-right:4px"></span> Price</span>
+          <span><span style="display:inline-block;width:20px;height:2px;background:#22c55e;vertical-align:middle;margin-right:4px;border-top:2px dotted #22c55e"></span> Call Strike (Upside)</span>
+          <span><span style="display:inline-block;width:20px;height:2px;background:#ef4444;vertical-align:middle;margin-right:4px;border-top:2px dotted #ef4444"></span> Put Strike (Downside)</span>
+          <span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;border:2px solid #22c55e;vertical-align:middle;margin-right:4px"></span><span style="display:inline-block;width:8px;height:8px;border-radius:50%;border:2px solid #ef4444;vertical-align:middle;margin-right:4px"></span> Expiry Strikes</span>
+        </div>
+      </div>
+
+      <!-- Strategy Suggestions based on Expected Move -->
+      <div class="wire-solid" style="margin-top:16px;padding:20px">
+        <div style="font-weight:700;font-size:15px;margin-bottom:16px;display:flex;align-items:center;gap:8px">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--accent)"></span>
+          Strategy Suggestions <span style="font-size:11px;color:var(--text3);font-weight:400">based on Expected Move &amp; IV Rank</span>
+        </div>
+        <div id="strategy-cards" class="grid grid-2" style="gap:12px">
+          <div style="background:var(--surface2);border:1px solid rgba(34,197,94,.2);border-radius:10px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <span style="font-weight:700;color:var(--green)">Short Put (Cash-Secured)</span>
+              <span class="wire-tag wire-green">High Confidence</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7">
+              <div>Sell <strong style="color:var(--text)">$250 Put</strong> &mdash; Apr 18 (19 DTE)</div>
+              <div>Premium: <strong style="color:var(--green)">$3.40</strong> &middot; Max Loss: $246.60</div>
+              <div>Strike below <strong>-1&sigma;</strong> expected move ($255.20)</div>
+              <div style="color:var(--text3);margin-top:4px">IV Rank 72 &rarr; premiums are elevated, favorable for selling</div>
+            </div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <span style="font-weight:700;color:var(--red)">Short Call (Covered)</span>
+              <span class="wire-tag wire-orange">Moderate</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7">
+              <div>Sell <strong style="color:var(--text)">$310 Call</strong> &mdash; Apr 18 (19 DTE)</div>
+              <div>Premium: <strong style="color:var(--green)">$2.80</strong> &middot; Capped upside: $310</div>
+              <div>Strike above <strong>+1&sigma;</strong> expected move ($301.60)</div>
+              <div style="color:var(--text3);margin-top:4px">82% probability of expiring OTM based on IV</div>
+            </div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid rgba(79,140,255,.2);border-radius:10px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <span style="font-weight:700;color:var(--accent)">Bull Put Credit Spread</span>
+              <span class="wire-tag wire-green">High Confidence</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7">
+              <div>Sell <strong style="color:var(--text)">$255 Put</strong> / Buy <strong style="color:var(--text)">$245 Put</strong></div>
+              <div>Net Credit: <strong style="color:var(--green)">$2.10</strong> &middot; Max Risk: $7.90 &middot; Width: $10</div>
+              <div>Short leg at <strong>-1&sigma;</strong>, long leg at <strong>-1.5&sigma;</strong></div>
+              <div style="color:var(--text3);margin-top:4px">Risk/reward: 3.76:1 &middot; 79% win probability</div>
+            </div>
+          </div>
+          <div style="background:var(--surface2);border:1px solid rgba(168,85,247,.2);border-radius:10px;padding:16px">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+              <span style="font-weight:700;color:var(--purple)">Iron Condor</span>
+              <span class="wire-tag wire-blue">Neutral</span>
+            </div>
+            <div style="font-size:12px;color:var(--text2);line-height:1.7">
+              <div>Sell <strong style="color:var(--text)">$255P/$310C</strong> / Buy <strong style="color:var(--text)">$245P/$320C</strong></div>
+              <div>Net Credit: <strong style="color:var(--green)">$4.40</strong> &middot; Max Risk: $5.60</div>
+              <div>Wings at <strong>&plusmn;1&sigma;</strong>, short strikes contain expected move</div>
+              <div style="color:var(--text3);margin-top:4px">Breakevens: $250.60 &ndash; $314.40 &middot; 68% prob of profit</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expiry Strike Deviation Table -->
+      <div class="wire-solid" style="margin-top:16px">
+        <div style="font-weight:700;font-size:14px;margin-bottom:12px">Expected Move by Expiry</div>
+        <table class="wire-table" style="font-size:12px">
+          <thead><tr><th>Expiry</th><th>DTE</th><th>IV</th><th>Exp Move</th><th style="color:var(--green)">+1&sigma; Call Strike</th><th style="color:var(--red)">-1&sigma; Put Strike</th><th>Suggested Strategy</th></tr></thead>
+          <tbody>
+            <tr><td>Apr 04</td><td style="font-family:'JetBrains Mono',monospace">5</td><td>48.2%</td><td>&plusmn;$8.40</td><td style="color:var(--green);font-weight:600">$287</td><td style="color:var(--red);font-weight:600">$270</td><td><span class="wire-tag wire-green" style="font-size:10px">Short $265 Put</span></td></tr>
+            <tr><td>Apr 11</td><td style="font-family:'JetBrains Mono',monospace">12</td><td>50.1%</td><td>&plusmn;$14.20</td><td style="color:var(--green);font-weight:600">$293</td><td style="color:var(--red);font-weight:600">$264</td><td><span class="wire-tag wire-blue" style="font-size:10px">Put Credit Spread $260/$250</span></td></tr>
+            <tr><td>Apr 18</td><td style="font-family:'JetBrains Mono',monospace">19</td><td>52.4%</td><td>&plusmn;$23.20</td><td style="color:var(--green);font-weight:600">$302</td><td style="color:var(--red);font-weight:600">$255</td><td><span class="wire-tag wire-purple" style="font-size:10px">Iron Condor $255/$310</span></td></tr>
+            <tr><td>May 16</td><td style="font-family:'JetBrains Mono',monospace">47</td><td>54.8%</td><td>&plusmn;$42.60</td><td style="color:var(--green);font-weight:600">$321</td><td style="color:var(--red);font-weight:600">$236</td><td><span class="wire-tag wire-green" style="font-size:10px">Short $230 Put</span></td></tr>
+            <tr><td>Jun 20</td><td style="font-family:'JetBrains Mono',monospace">82</td><td>56.2%</td><td>&plusmn;$63.40</td><td style="color:var(--green);font-weight:600">$342</td><td style="color:var(--red);font-weight:600">$215</td><td><span class="wire-tag wire-red" style="font-size:10px">Short $350 Call (covered)</span></td></tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="grid grid-4" style="margin-top:16px">
@@ -285,7 +364,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);ove
         <div class="stat-card">
           <div class="stat-label">IV Rank</div>
           <div class="stat-value">72</div>
-          <div class="stat-change" style="color:var(--orange)">High</div>
+          <div class="stat-change" style="color:var(--orange)">High &rarr; Sell premium</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Total OI</div>
@@ -1063,17 +1142,93 @@ function genLine(baseVal, days, drift, vol) {
 
 const chartsInit = {};
 
+function genPriceLine(basePrice, days, volatility) {
+  const data = [];
+  let price = basePrice;
+  const start = new Date('2024-09-01');
+  for (let i = 0; i < days; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    if (d.getDay() === 0 || d.getDay() === 6) continue;
+    price += (Math.random() - 0.48) * volatility;
+    data.push({ time: d.toISOString().split('T')[0], value: +price.toFixed(2) });
+  }
+  return data;
+}
+
+function addFutureDates(lastDate, count) {
+  const dates = [];
+  const d = new Date(lastDate);
+  for (let i = 0; i < count; i++) {
+    d.setDate(d.getDate() + 1);
+    while (d.getDay() === 0 || d.getDay() === 6) d.setDate(d.getDate() + 1);
+    dates.push(d.toISOString().split('T')[0]);
+  }
+  return dates;
+}
+
 function initChartsIfNeeded(pageId) {
   if (pageId === 'ticker' && !chartsInit.ticker) {
     chartsInit.ticker = true;
     const el = document.getElementById('tv-ticker-chart');
-    const chart = LightweightCharts.createChart(el, { ...chartOpts, width: el.clientWidth, height: 360 });
-    const candles = genCandles(220, 180, 8);
-    const cs = chart.addCandlestickSeries({ upColor: '#22c55e', downColor: '#ef4444', borderUpColor: '#22c55e', borderDownColor: '#ef4444', wickUpColor: '#22c55e88', wickDownColor: '#ef444488' });
-    cs.setData(candles);
-    const vs = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
-    chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.82, bottom: 0 } });
-    vs.setData(genVolume(candles));
+    const chart = LightweightCharts.createChart(el, {
+      ...chartOpts, width: el.clientWidth, height: 420,
+      rightPriceScale: { ...chartOpts.rightPriceScale, scaleMargins: { top: 0.05, bottom: 0.05 } },
+    });
+
+    const priceData = genPriceLine(310, 130, 5);
+    const lastPoint = priceData[priceData.length - 1];
+    const lastPrice = lastPoint.value;
+    const lastDate = lastPoint.time;
+
+    const priceLine = chart.addLineSeries({ color: '#4f8cff', lineWidth: 2.5, crosshairMarkerRadius: 6, crosshairMarkerBorderColor: '#4f8cff', crosshairMarkerBackgroundColor: '#12121a', lastValueVisible: true, priceLineVisible: true });
+    priceLine.setData(priceData);
+
+    const expiryDtes = [5, 12, 19, 47, 82];
+    const expiryIVs = [0.482, 0.501, 0.524, 0.548, 0.562];
+    const futureDates = addFutureDates(lastDate, 90);
+
+    const upData = [{ time: lastDate, value: lastPrice }];
+    const downData = [{ time: lastDate, value: lastPrice }];
+
+    expiryDtes.forEach((dte, i) => {
+      const iv = expiryIVs[i];
+      const expMove = lastPrice * iv * Math.sqrt(dte / 365);
+      const dateIdx = Math.min(dte - 1, futureDates.length - 1);
+      upData.push({ time: futureDates[dateIdx], value: +(lastPrice + expMove).toFixed(2) });
+      downData.push({ time: futureDates[dateIdx], value: +(lastPrice - expMove).toFixed(2) });
+    });
+
+    const upLine = chart.addLineSeries({ color: '#22c55e', lineWidth: 2, lineStyle: 2, crosshairMarkerRadius: 6, crosshairMarkerBorderColor: '#22c55e', crosshairMarkerBackgroundColor: '#12121a', lastValueVisible: true, priceLineVisible: false, pointMarkersVisible: true });
+    upLine.setData(upData);
+    upLine.applyOptions({ priceFormat: { type: 'custom', formatter: v => '$' + v.toFixed(2) } });
+
+    const downLine = chart.addLineSeries({ color: '#ef4444', lineWidth: 2, lineStyle: 2, crosshairMarkerRadius: 6, crosshairMarkerBorderColor: '#ef4444', crosshairMarkerBackgroundColor: '#12121a', lastValueVisible: true, priceLineVisible: false, pointMarkersVisible: true });
+    downLine.setData(downData);
+    downLine.applyOptions({ priceFormat: { type: 'custom', formatter: v => '$' + v.toFixed(2) } });
+
+    const markers = [];
+    expiryDtes.forEach((dte, i) => {
+      const dateIdx = Math.min(dte - 1, futureDates.length - 1);
+      const t = futureDates[dateIdx];
+      const iv = expiryIVs[i];
+      const move = lastPrice * iv * Math.sqrt(dte / 365);
+      markers.push({ time: t, position: 'aboveBar', color: '#22c55e', shape: 'circle', text: '$' + (lastPrice + move).toFixed(0) + ' (' + dte + 'd)' });
+    });
+    upLine.setMarkers(markers);
+
+    const downMarkers = [];
+    expiryDtes.forEach((dte, i) => {
+      const dateIdx = Math.min(dte - 1, futureDates.length - 1);
+      const t = futureDates[dateIdx];
+      const iv = expiryIVs[i];
+      const move = lastPrice * iv * Math.sqrt(dte / 365);
+      downMarkers.push({ time: t, position: 'belowBar', color: '#ef4444', shape: 'circle', text: '$' + (lastPrice - move).toFixed(0) + ' (' + dte + 'd)' });
+    });
+    downLine.setMarkers(downMarkers);
+
+    priceLine.createPriceLine({ price: lastPrice, color: '#ffffff44', lineWidth: 1, lineStyle: 1, axisLabelVisible: false, title: 'Current $' + lastPrice.toFixed(2) });
+
     chart.timeScale().fitContent();
     new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth })).observe(el);
   }
@@ -1092,22 +1247,19 @@ function initChartsIfNeeded(pageId) {
     const el = document.getElementById('tv-gex-chart');
     const chart = LightweightCharts.createChart(el, { ...chartOpts, width: el.clientWidth, height: 520, rightPriceScale: { ...chartOpts.rightPriceScale, scaleMargins: { top: 0.02, bottom: 0.02 } } });
 
-    const candles = genCandles(5600, 90, 40);
-    const cs = chart.addCandlestickSeries({ upColor: '#22c55e', downColor: '#ef4444', borderUpColor: '#22c55e', borderDownColor: '#ef4444', wickUpColor: '#22c55e88', wickDownColor: '#ef444488' });
-    cs.setData(candles);
+    const priceGex = genPriceLine(5600, 90, 30);
+    const cs = chart.addLineSeries({ color: '#4f8cff', lineWidth: 2.5, crosshairMarkerRadius: 5, crosshairMarkerBorderColor: '#4f8cff', crosshairMarkerBackgroundColor: '#12121a', lastValueVisible: true, priceLineVisible: true });
+    cs.setData(priceGex);
 
-    const vs = chart.addHistogramSeries({ priceFormat: { type: 'volume' }, priceScaleId: 'vol' });
-    chart.priceScale('vol').applyOptions({ scaleMargins: { top: 0.85, bottom: 0 } });
-    vs.setData(genVolume(candles));
+    const lastCandle = priceGex[priceGex.length - 1] || { value: 5850 };
 
     const ivLine = chart.addLineSeries({ color: '#00bfff', lineWidth: 2, lineStyle: 0, crosshairMarkerVisible: false, priceScaleId: 'right', lastValueVisible: false, priceLineVisible: false });
     const ivData = [];
-    const lastCandle = candles[candles.length - 1];
-    const lastPrice = lastCandle ? lastCandle.close : 5850;
-    for (let i = 0; i < candles.length; i++) {
-      const t = i / candles.length;
+    const lastPrice = lastCandle.value || 5850;
+    for (let i = 0; i < priceGex.length; i++) {
+      const t = i / priceGex.length;
       const curve = lastPrice - 400 + (800 * Math.pow(t, 0.4));
-      ivData.push({ time: candles[i].time, value: +curve.toFixed(2) });
+      ivData.push({ time: priceGex[i].time, value: +curve.toFixed(2) });
     }
     ivLine.setData(ivData);
 
@@ -1132,13 +1284,13 @@ function initChartsIfNeeded(pageId) {
       });
     });
 
-    const markers = [];
-    const last5 = candles.slice(-20);
-    const high1 = last5.reduce((a, b) => a.high > b.high ? a : b);
-    markers.push({ time: high1.time, position: 'aboveBar', color: '#22c55e', shape: 'arrowDown', text: 'Call Wall' });
-    const low1 = last5.reduce((a, b) => a.low < b.low ? a : b);
-    markers.push({ time: low1.time, position: 'belowBar', color: '#ef4444', shape: 'arrowUp', text: 'Put Wall' });
-    cs.setMarkers(markers.sort((a, b) => a.time < b.time ? -1 : 1));
+    const gexMarkers = [];
+    const last20 = priceGex.slice(-20);
+    const high1 = last20.reduce((a, b) => a.value > b.value ? a : b);
+    gexMarkers.push({ time: high1.time, position: 'aboveBar', color: '#22c55e', shape: 'arrowDown', text: 'Call Wall' });
+    const low1 = last20.reduce((a, b) => a.value < b.value ? a : b);
+    gexMarkers.push({ time: low1.time, position: 'belowBar', color: '#ef4444', shape: 'arrowUp', text: 'Put Wall' });
+    cs.setMarkers(gexMarkers.sort((a, b) => a.time < b.time ? -1 : 1));
 
     chart.timeScale().fitContent();
     new ResizeObserver(() => chart.applyOptions({ width: el.clientWidth })).observe(el);
